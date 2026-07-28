@@ -27,7 +27,7 @@ st.markdown("""
 
     /* Sidebar sombre moderne */
     section[data-testid="stSidebar"] {
-        background-color: #3F5056 !important;
+        background-color: #E8EDEF !important;
     }
     /* Titres et labels de la sidebar en blanc/clair */
     section[data-testid="stSidebar"] h3,
