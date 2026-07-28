@@ -724,13 +724,8 @@ if logo_url and domain_name:
 elif logo_url:
   logo_html = f'<img src="{logo_url}" style="height: 80px; width: 80px; object-fit: cover; border-radius: 50%;" alt="Logo">'
 else:
-  # Option 1 : Un balisage neutre vide évitant le bug d'affichage HTML
-  #logo_html = '<span style="display:none;"></span>'
-
-  # Option 2 (Recommandée) : Afficher les premières lettres du Ticker sous forme d'avatar s'il n'y a pas de logo
   initiales = ticker_input[:2].upper()
   logo_html = f'<div style="height: 80px; width: 80px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.5rem; color: white;">{initiales}</div>'
-
 
 # Affichage de l'en-tête principal
 st.markdown(
