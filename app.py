@@ -735,11 +735,10 @@ st.markdown(
         {logo_html}
         <div>
             <h2 style="margin: 0 0 -35px 0; line-height: 1.0;">{info.get('shortName', ticker_input)} <span style="font-size: 1.2rem; opacity: 0.9;"></span></h2>
-            <h3 style="margin: 10px 0 0 0; line-height: 1.1;"><strong>ISIN : {isin_code}</strong></h3>
-                            <span style="background-color: rgba(255, 255, 255, 0.15); padding: 4px 8px; border-radius: 6px; font-size: 0.85rem;">
+            <div style="display: flex; gap: 8px; margin-top: 6px;">
+                <span style="background-color: rgba(255, 255, 255, 0.15); padding: 4px 8px; border-radius: 6px; font-size: 0.85rem;">
                     <strong>ISIN :</strong> {isin_code}
                 </span>
-            <div style="display: flex; gap: 8px; margin-top: 6px;">
                 <span style="background-color: rgba(255, 255, 255, 0.15); padding: 4px 8px; border-radius: 6px; font-size: 0.85rem;">
                     <strong>Secteur :</strong> {sector}
                 </span>
