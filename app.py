@@ -734,7 +734,7 @@ st.markdown(
     <div class="dashboard-header-left" style="display: flex; align-items: center; gap: 15px;">
         {logo_html}
         <div>
-            <h2 style="margin: 0 0 -10px 0; line-height: 1.0;">{info.get('shortName', ticker_input)} <span style="font-size: 1.2rem; opacity: 0.9;"></span></h2>
+            <h2 style="margin: 0 0 -15px 0; line-height: 1.0;">{info.get('shortName', ticker_input)} <span style="font-size: 1.2rem; opacity: 0.9;"></span></h2>
             <div style="display: flex; gap: 8px; margin-top: 6px;">
                 <span style="background-color: rgba(255, 255, 255, 0.15); padding: 4px 8px; border-radius: 6px; font-size: 0.85rem;">
                     <strong>ISIN :</strong> {isin_code}
