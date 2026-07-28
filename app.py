@@ -32,7 +32,7 @@ st.markdown("""
     /* Titres et labels de la sidebar en blanc/clair */
     section[data-testid="stSidebar"] h3,
     section[data-testid="stSidebar"] label {
-        color: #ADD9D3 !important;
+        color: #147394 !important;
         font-weight: 600;
     }
 
