@@ -203,7 +203,7 @@ tickers_portfolio = {
 
 # 2. Chargement de la liste globale (ticker.xlsx)
 @st.cache_data
-def charger_liste_tickers(fichier_excel="/content/drive/MyDrive/Cyril/Bourse/Ticker/ticker.xlsx"):
+def charger_liste_tickers(fichier_excel="ticker.xlsx"):
     try:
         df_tickers = pd.read_excel(fichier_excel)
         df_tickers = df_tickers.dropna(subset=["Name", "full ticker"])
@@ -217,7 +217,7 @@ def charger_liste_tickers(fichier_excel="/content/drive/MyDrive/Cyril/Bourse/Tic
 charger_liste_tickers.clear()
 
 # Puis chargement normal
-tickers_excel = charger_liste_tickers("/content/drive/MyDrive/Cyril/Bourse/Ticker/ticker.xlsx")
+tickers_excel = charger_liste_tickers("ticker.xlsx")
 
 # --- COMPOSANTS DE SÉLECTION ---
 
