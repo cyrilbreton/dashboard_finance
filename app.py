@@ -182,7 +182,7 @@ st.markdown("""
 # -----------------------------------------------------------------------------
 # 1. BARRE LATÉRALE - SÉLECTION DU TICKER (3 MODES)
 # -----------------------------------------------------------------------------
-st.sidebar.markdown("### 🏷️ ANALYSE FONDAMENTALE")
+st.sidebar.markdown("### SELECTION TICKER")
 
 # 1. Liste prédéfinie : Portefeuille
 tickers_portfolio = {
