@@ -715,17 +715,21 @@ st.write("")
 
 # Génération du logo avec lien cliquable vers le site web (domain_name)
 if logo_url and domain_name:
-  # On s'assure que domain_name commence par https:// pour former une URL valide
   website_url = (
       domain_name
       if domain_name.startswith("http")
       else f"https://{domain_name}"
   )
-  logo_html = f'<a href="{website_url}" target="_blank"><img src="{logo_url}" style="height: 100px; width: 100px; object-fit: cover; border-radius: 50%; cursor: pointer;" alt="Logo"></a>'
+  logo_html = f'<a href="{website_url}" target="_blank"><img src="{logo_url}" style="height: 80px; width: 80px; object-fit: cover; border-radius: 50%; cursor: pointer;" alt="Logo"></a>'
 elif logo_url:
-  logo_html = f'<img src="{logo_url}" style="height: 100px; width: 100px; object-fit: cover; border-radius: 50%;" alt="Logo">'
+  logo_html = f'<img src="{logo_url}" style="height: 80px; width: 80px; object-fit: cover; border-radius: 50%;" alt="Logo">'
 else:
-  logo_html = ""
+  # Option 1 : Un balisage neutre vide évitant le bug d'affichage HTML
+  #logo_html = '<span style="display:none;"></span>'
+
+  # Option 2 (Recommandée) : Afficher les premières lettres du Ticker sous forme d'avatar s'il n'y a pas de logo
+  initiales = ticker_input[:2].upper()
+  logo_html = f'<div style="height: 80px; width: 80px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.5rem; color: white;">{initiales}</div>'
 
 
 # Affichage de l'en-tête principal
