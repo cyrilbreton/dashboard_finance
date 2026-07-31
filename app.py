@@ -189,6 +189,7 @@ tickers_portfolio = {
     "Air Liquide": "AI.PA",
     "Crédit Agricole": "ACA.PA",
     "Investor AB": "INVE-B.ST",
+    "Microsoft Corp": "MSFT",
     "Mauna Kea Techologies": "ALMKT.PA",
     "Novo Nordisk": "NOV.DE",
     "TotalEnergies": "TTE.PA",
