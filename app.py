@@ -1099,7 +1099,7 @@ with col_h2:
 # -----------------------------------------------------------------------------
 # 6. GRAPHIQUE LOGARITHMIQUE SUR 15 ANS
 # -----------------------------------------------------------------------------
-st.markdown("<div class='card-title' style='background:white; padding:15px; border-radius:12px 12px 0 0; margin-bottom:0;'>📉 Graphique de Régression Log-Normale & Projection 5 ans</div>", unsafe_allow_html=True)
+st.markdown("<div class='card-title' style='background:white; padding:15px; border-radius:12px 12px 0 0; margin-bottom:0;'>📈 Droite de Régression Log-Normale & Projection 5 ans</div>", unsafe_allow_html=True)
 
 fig_chart = go.Figure()
 
