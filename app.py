@@ -1179,6 +1179,7 @@ fig.update_xaxes(
     showline=True,
     linecolor='lightgray',
     ticks="inside",
+    dticks= "M12",
     ticklabelmode="period", # Affiche l'année au début de la période
     tickformat="%Y" # Force l'affichage de l'année sur 4 chiffres
 )
