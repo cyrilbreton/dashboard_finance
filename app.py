@@ -1140,7 +1140,7 @@ with col_hm2:
 # 7. HISTORIQUE COURS : DRAWDOWN (10A) & COURS (10A)
 # -----------------------------------------------------------------------------
 st.write("")
-st.markdown("<div class='card-title' style='background:white; padding:15px; border-radius:12px 12px 0 0; margin-bottom:0;'>🔥 Historique de cours (10 ans)</div>", unsafe_allow_html=True)
+st.markdown("<div class='card-title' style='background:white; padding:15px; border-radius:12px 12px 0 0; margin-bottom:0;'>📅 Historique de cours (10 ans)</div>", unsafe_allow_html=True)
 
 col_h1, col_h2 = st.columns(2)
 
@@ -1247,39 +1247,38 @@ with col_h1:
     st.plotly_chart(fig, use_container_width=True)
 
 # =============================================================================
-# 10. DRAWDOWN 10 ANS
+# 11. COURS 10 ANS
 # =============================================================================
-# 1. Calcul du drawdown et de sa médiane (arrondie à l'entier)
-df['Peak'] = df['Close'].cummax()
-df['Drawdown'] = ((df['Close'] - df['Peak']) / df['Peak']) * 100
-current_drawdown = df['Drawdown'].iloc[-1]
+# 1. Récupération des données de prix et calcul des repères
+current_price = df['Close'].iloc[-1]
+min_price = df['Close'].min()
+max_price = df['Close'].max()
 
 # 2. Création du graphique Plotly
 fig = go.Figure()
 
-# Ajout de la zone remplie
+# Ajout de la zone remplie pour le cours de l'action
 fig.add_trace(go.Scatter(
     x=df.index,
-    y=df['Drawdown'],
+    y=df['Close'],
     mode='lines',
-    name='Drawdown',
+    name='Cours',
     fill='tozeroy',
-    line=dict(color='rgba(240, 89, 89, 1)', width=2),
-    fillcolor='rgba(240, 89, 89, 0.1)',
+    line=dict(color='rgba(41, 98, 255, 1)', width=2),  # Bleu professionnel
+    fillcolor='rgba(41, 98, 255, 0.1)',              # Remplissage bleu très transparent
     hoverinfo='skip'
 ))
 
 # 3. Configuration de l'affichage
 
-# Style de l'axe Y (étiquettes à droite, format pourcentage)
+# Style de l'axe Y (étiquettes à droite, format monétaire/nombre)
 fig.update_yaxes(
-    tickformat=".0f",
-    ticksuffix="%",
+    tickformat=",.2f",         # Format décimal pour un prix (ex: 150.50)
     ticks="outside",
     showline=True,
     linecolor='lightgray',
-    side="right",
-    range=[df['Drawdown'].min() * 1.1, 0]
+    side="right",              # Étiquettes à droite
+    range=[min_price * 0.95, max_price * 1.05]  # Plage ajustée avec un peu de marge haut/bas
 )
 
 # Style de l'axe X (graduations annuelles)
@@ -1287,44 +1286,45 @@ fig.update_xaxes(
     showline=True,
     linecolor='lightgray',
     ticks="inside",
-    dtick= "M12",
+    dtick="M12",
     ticklabelmode="period", 
     tickformat="%Y",
     tickangle=0
 )
 
-# Ajout de l'annotation pour le drawdown actuel
-annotation_text = f"{current_drawdown:.1f}%"
+# Ajout de l'annotation pour le prix actuel (bulle en haut/milieu à droite)
+annotation_text = f"{current_price:.2f}"
 fig.add_annotation(
-    x=df.index[-1], # Position x = dernière date
-    y=current_drawdown, # Position y = valeur actuelle
+    x=df.index[-1],          # Position x = dernière date
+    y=current_price,         # Position y = prix actuel
     text=annotation_text,
     showarrow=False,
     xref="x",
     yref="y",
     font=dict(color="white", size=12),
-    bgcolor="rgba(240, 89, 89, 0.95)", # Fond rouge
+    bgcolor="rgba(41, 98, 255, 0.95)", # Fond bleu assorti
     bordercolor="white",
     borderwidth=1,
     borderpad=3,
-    ax=30, # Décalage x de l'étiquette
-    ay=0 # Décalage y de l'étiquette
+    ax=30, 
+    ay=0 
 )
-# 2. Ajout de la ligne horizontale rouge du Max Drawdown
+
+# Ajout de la ligne horizontale de référence (ex: le prix minimum sur la période)
 fig.add_trace(go.Scatter(
     x=[df.index[0], df.index[-1]],
-    y=[df['Drawdown'].min(), df['Drawdown'].min()],
+    y=[min_price, min_price],
     mode='lines',
-    line=dict(color='rgba(240, 89, 89, 0.9)', width=1, dash='solid'),
+    line=dict(color='rgba(41, 98, 255, 0.5)', width=1, dash='solid'),
     showlegend=False,
     hoverinfo='skip'
-    ))
+))
 
-# Ajout du bandeau d'information 
+# Ajout du bandeau d'information en bas à gauche
 fig.add_annotation(
     x=df.index[0],
-    y=df['Drawdown'].min() * 0.95, # Position basse
-    text=f"<b>{ticker_input}  {df['Drawdown'].min():.1f}%</b>",
+    y=min_price * 0.97,      # Position basse juste sous la ligne min
+    text=f"<b>{ticker_input} (Min: {min_price:.2f})</b>",
     showarrow=False,
     xref="x",
     yref="y",
@@ -1334,14 +1334,14 @@ fig.add_annotation(
 
 # Mise en page générale
 fig.update_layout(
-    title=f"<b>Drawdown {info.get('shortName', ticker_input)}</b>",
-    xaxis_title="", # Pas de titre sur l'axe X (les années suffisent)
-    yaxis_title="", # pas de titre sur l'axe Y
-    template="plotly_white", # Fond clair
-    margin=dict(l=10, r=80, t=40, b=50), # Marges ajustées, surtout à droite
+    title=f"<b>Cours {info.get('shortName', ticker_input)}</b>",
+    xaxis_title="", 
+    yaxis_title="", 
+    template="plotly_white", 
+    margin=dict(l=10, r=80, t=40, b=50), 
     height=400,
-    hovermode="x unified", # Ligne verticale au survol montrant la valeur à cette date
-    showlegend=False # Pas de légende
+    hovermode="x unified", 
+    showlegend=False 
 )
 
 # --- 4. Affichage dans Streamlit ---
