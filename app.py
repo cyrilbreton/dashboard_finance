@@ -1142,36 +1142,33 @@ with col_hm2:
 # 1. Calcul du drawdown et de sa médiane (arrondie à l'entier)
 df['Peak'] = df['Close'].cummax()
 df['Drawdown'] = ((df['Close'] - df['Peak']) / df['Peak']) * 100
-# Récupération de la dernière valeur (valeur actuelle)
 current_drawdown = df['Drawdown'].iloc[-1]
-#current_date = df.index[-1].strftime('%Y-%m-%d')
-#current_price = df['Close'].iloc[-1]
 
-# --- 2. Création du graphique Plotly ---
+# 2. Création du graphique Plotly
 fig = go.Figure()
 
-# Ajout de la zone remplie (le "remplissage" rouge)
+# Ajout de la zone remplie
 fig.add_trace(go.Scatter(
     x=df.index,
     y=df['Drawdown'],
     mode='lines',
     name='Drawdown',
-    fill='tozeroy',  # Remplit de la courbe à zéro
-    line=dict(color='rgba(240, 89, 89, 1)', width=2), # Couleur rouge
-    fillcolor='rgba(240, 89, 89, 0.1)', # Zone très transparente
-    hoverinfo='skip' # Désactive le survol par défaut pour gérer le custom_data si besoin
+    fill='tozeroy',
+    line=dict(color='rgba(240, 89, 89, 1)', width=2),
+    fillcolor='rgba(240, 89, 89, 0.1)',
+    hoverinfo='skip'
 ))
 
-# --- 3. Configuration de l'affichage ---
+# 3. Configuration de l'affichage
 
 # Style de l'axe Y (étiquettes à droite, format pourcentage)
 fig.update_yaxes(
-    tickformat=".0f%%", # Format entier + pourcentage (ex: -20%)
+    tickformat=".0f%%",
     ticks="outside",
     showline=True,
     linecolor='lightgray',
-    side="right",  # Étiquettes à droite comme dans l'image
-    range=[df['Drawdown'].min() * 1.1, 0] # Ajuste la plage pour un peu d'espace
+    side="right",
+    range=[df['Drawdown'].min() * 1.1, 0]
 )
 
 # Style de l'axe X (graduations annuelles)
@@ -1185,7 +1182,7 @@ fig.update_xaxes(
     tickangle=0
 )
 
-# Ajout de l'annotation pour le drawdown actuel (bulle en haut à droite)
+# Ajout de l'annotation pour le drawdown actuel
 annotation_text = f"{current_drawdown:.1f}%"
 fig.add_annotation(
     x=df.index[-1], # Position x = dernière date
@@ -1212,7 +1209,6 @@ fig.add_trace(go.Scatter(
     hoverinfo='skip'
     ))
 
-
 # Ajout du bandeau d'information 
 fig.add_annotation(
     x=df.index[0],
@@ -1227,7 +1223,7 @@ fig.add_annotation(
 
 # Mise en page générale
 fig.update_layout(
-    title=f"<b>Évolution du Drawdown - {ticker_input}</b>",
+    title=f"<b>Drawdown {info.get('shortName', ticker_input)}</b>",
     xaxis_title="", # Pas de titre sur l'axe X (les années suffisent)
     yaxis_title="Drawdown (%)", # Titre sur l'axe Y à droite
     template="plotly_white", # Fond clair
