@@ -1197,9 +1197,9 @@ fig.add_trace(go.Scatter(
 # Ajout du texte de la valeur tout à droite de la ligne
 fig.add_trace(go.Scatter(
     x=[df.index[-1]],
-    y=[median_drawdown],
+    y=[max_drawdown],
     mode='text',
-    text=[f" Médiane : {median_drawdown}%"],
+    text=[f" Max : {max_drawdown}%"],
     textposition="middle right",
     textfont=dict(color="orange", size=11),
     showlegend=False
