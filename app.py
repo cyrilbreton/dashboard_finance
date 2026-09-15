@@ -1140,7 +1140,7 @@ with col_hm2:
 # 7. HISTORIQUE COURS : DRAWDOWN (10A) & COURS (10A)
 # -----------------------------------------------------------------------------
 st.write("")
-st.markdown("<div class='card-title' style='background:white; padding:15px; border-radius:12px 12px 0 0; margin-bottom:0;'>📅 Historique de cours (10 ans)</div>", unsafe_allow_html=True)
+st.markdown("<div class='card-title' style='background:white; padding:15px; border-radius:12px 12px 0 0; margin-bottom:0;'>📅 Historique du ticker {info.get('shortName', ticker_input)}</div>", unsafe_allow_html=True)
 
 col_h1, col_h2 = st.columns(2)
 
@@ -1312,7 +1312,7 @@ fig.add_annotation(
 
 # Mise en page générale
 fig.update_layout(
-    title=f"<b>Cours {info.get('shortName', ticker_input)}</b>",
+    title="",
     xaxis_title="", 
     yaxis_title="", 
     template="plotly_white", 
