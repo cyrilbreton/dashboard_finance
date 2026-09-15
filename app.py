@@ -1144,32 +1144,6 @@ df['Peak'] = df['Close'].cummax()
 df['Drawdown'] = ((df['Close'] - df['Peak']) / df['Peak']) * 100
 max_drawdown = round(df['Drawdown'].min())
 
-# 2. Création de la figure Plotly
-fig = go.Figure()
-
-# Courbe du drawdown
-fig.add_trace(go.Scatter(
-    x=df.index,
-    y=df['Drawdown'],
-    mode='lines',
-    name='Drawdown',
-    fill='tozeroy',
-    line=dict(color='#ff4b4b', width=1.5),
-    fillcolor='rgba(255, 75, 75, 0.2)',
-    showlegend=False  # Cache de la légende pour cette trace
-))
-
-# Ligne horizontale de la médiane avec la valeur affichée à droite
-fig.add_trace(go.Scatter(
-    x=[df.index[-1]],  # On place le point texte à la toute fin de l'axe X (à droite)
-    y=[max_drawdown],
-    mode='text+lines',
-    text=[f"Max: {max_drawdown}%"],
-    textposition="middle right",  # Positionne le texte à droite du point final
-    line=dict(color='orange', width=1.5, dash='dash'),
-    showlegend=False  # Cache de la légende
-))
-
 # Tracé complet de la ligne horizontale sur toute la largeur (pour éviter qu'elle s'arrête au dernier point)
 # Astuce : On trace une ligne continue de bout en bout sans texte, et on superpose le texte à la fin.
 # Version propre combinée :
@@ -1180,7 +1154,7 @@ fig.add_trace(go.Scatter(
     y=df['Drawdown'],
     mode='lines',
     fill='tozeroy',
-    line=dict(color='#ff4b4b', width=1.5),
+    line=dict(color='#ff4b4b', width=2),
     fillcolor='rgba(255, 75, 75, 0.2)',
     showlegend=False
 ))
@@ -1190,7 +1164,7 @@ fig.add_trace(go.Scatter(
     x=[df.index[0], df.index[-1]],
     y=[max_drawdown, max_drawdown],
     mode='lines',
-    line=dict(color='orange', width=1.5, dash='dash'),
+    line=dict(color='red', width=1.5, dash='dash'),
     showlegend=False
 ))
 
@@ -1201,7 +1175,7 @@ fig.add_trace(go.Scatter(
     mode='text',
     text=[f" Max : {max_drawdown}%"],
     textposition="middle right",
-    textfont=dict(color="orange", size=11),
+    textfont=dict(color="black", size=11),
     showlegend=False
 ))
 
