@@ -1136,6 +1136,14 @@ with col_hm2:
     st.plotly_chart(fig_vol, use_container_width=True)
 
 
+# -----------------------------------------------------------------------------
+# 7. HISTORIQUE COURS : DRAWDOWN (10A) & COURS (10A)
+# -----------------------------------------------------------------------------
+st.write("")
+st.markdown("<div class='card-title' style='background:white; padding:15px; border-radius:12px 12px 0 0; margin-bottom:0;'>🔥 Historique de cours (10 ans)</div>", unsafe_allow_html=True)
+
+col_hm1, col_hm2 = st.columns(2)
+
 # =============================================================================
 # 10. DRAWDOWN 10 ANS
 # =============================================================================
@@ -1235,4 +1243,5 @@ fig.update_layout(
 )
 
 # --- 4. Affichage dans Streamlit ---
+with col_hm1:
 st.plotly_chart(fig, use_container_width=True)
