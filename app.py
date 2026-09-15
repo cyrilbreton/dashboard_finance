@@ -356,6 +356,10 @@ df['-2std'] = np.exp(df['Log_Pred'] - 2 * std_dev)
 cours_actuel = df['Close'].iloc[-1]
 valeur_theorique = df['Theoretical'].iloc[-1]
 ecart_regression = ((valeur_theorique - cours_actuel) / valeur_theorique) * 100
+if ecart_regression < 0:
+    ecart_badge = "<span class='badge badge-red'></span>"
+else:
+    ecart_badge = "<span class='badge badge-green'></span>"
 position_sigma = (np.log(cours_actuel) - df['Log_Pred'].iloc[-1]) / std_dev
 
 nb_jours_projection = 1260
