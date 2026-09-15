@@ -355,7 +355,7 @@ df['-2std'] = np.exp(df['Log_Pred'] - 2 * std_dev)
 
 cours_actuel = df['Close'].iloc[-1]
 valeur_theorique = df['Theoretical'].iloc[-1]
-ecart_regression = ((cours_actuel - valeur_theorique) / valeur_theorique) * 100
+ecart_regression = ((valeur_theorique - cours_actuel) / valeur_theorique) * 100
 position_sigma = (np.log(cours_actuel) - df['Log_Pred'].iloc[-1]) / std_dev
 
 nb_jours_projection = 1260
