@@ -1139,24 +1139,45 @@ with col_hm2:
 # =============================================================================
 # 10. DRAWDOWN 10 ANS
 # =============================================================================
-# 1. Calcul du pic cumulé sur 10 ans (si df contient déjà l'historique 10y)
+# 1. Calcul du drawdown (si ce n'est pas déjà fait)
+# 1. Calcul du drawdown et de sa médiane
 df['Peak'] = df['Close'].cummax()
-
-# 2. Calcul du drawdown en pourcentage
 df['Drawdown'] = ((df['Close'] - df['Peak']) / df['Peak']) * 100
+median_drawdown = df['Drawdown'].median()
 
-# 3. Affichage dans Streamlit
-fig_chart.update_layout(
-    yaxis=dict(title="% drawdown", side="left", gridcolor="#eef4f4"),
-    xaxis=dict(title="Année", gridcolor="#eef4f4"),
-    hovermode="x unified",
-    height=500,
-    paper_bgcolor='#ffffff',
-    plot_bgcolor='#ffffff',
-    margin=dict(l=20, r=20, t=20, b=20),
-    legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+# 2. Création de la figure Plotly
+fig = go.Figure()
+
+# Courbe du drawdown
+fig.add_trace(go.Scatter(
+    x=df.index,
+    y=df['Drawdown'],
+    mode='lines',
+    name='Drawdown',
+    fill='tozeroy',
+    line=dict(color='#ff4b4b', width=1.5),
+    fillcolor='rgba(255, 75, 75, 0.2)'
+))
+
+# Ligne horizontale de la médiane
+fig.add_trace(go.Scatter(
+    x=[df.index[0], df.index[-1]],
+    y=[median_drawdown, median_drawdown],
+    mode='lines',
+    name=f'Médiane ({median_drawdown:.2f}%)',
+    line=dict(color='orange', width=1.5, dash='dash')
+))
+
+# 3. Mise en forme du thème
+fig.update_layout(
+    title="Évolution du Drawdown (10 ans) & Médiane",
+    xaxis_title="",
+    yaxis_title="Drawdown (%)",
+    template="plotly_dark",
+    margin=dict(l=10, r=10, t=40, b=10),
+    height=350,
+    hovermode="x unified"
 )
-st.plotly_chart(df['drawdown'], use_container_width=True)
-st.subheader("Évolution du Drawdown (10 ans)")
-#st.line_chart(df['Drawdown'])
 
+# 4. Affichage dans Streamlit
+st.plotly_chart(fig, use_container_width=True)
