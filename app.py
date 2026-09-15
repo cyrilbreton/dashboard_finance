@@ -1307,7 +1307,7 @@ fig.add_annotation(
     bordercolor="white",
     borderwidth=1,
     borderpad=3,
-    ax=30, 
+    ax=100, 
     ay=0 
 )
 
