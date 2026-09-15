@@ -1141,18 +1141,17 @@ with col_hm2:
 # =============================================================================
 # 1. Calcul du drawdown et de sa médiane (arrondie à l'entier)
 df['Peak'] = df['Close'].cummax()
-    df['Drawdown'] = ((df['Close'] - df['Peak']) / df['Peak']) * 100
+df['Drawdown'] = ((df['Close'] - df['Peak']) / df['Peak']) * 100
+# Récupération de la dernière valeur (valeur actuelle)
+current_drawdown = df['Drawdown'].iloc[-1]
+current_date = df.index[-1].strftime('%Y-%m-%d')
+current_price = df['Close'].iloc[-1]
 
-    # Récupération de la dernière valeur (valeur actuelle)
-    current_drawdown = df['Drawdown'].iloc[-1]
-    current_date = df.index[-1].strftime('%Y-%m-%d')
-    current_price = df['Close'].iloc[-1]
+# --- 2. Création du graphique Plotly ---
+fig = go.Figure()
 
-    # --- 2. Création du graphique Plotly ---
-    fig = go.Figure()
-
-    # Ajout de la zone remplie (le "remplissage" rouge)
-    fig.add_trace(go.Scatter(
+# Ajout de la zone remplie (le "remplissage" rouge)
+fig.add_trace(go.Scatter(
         x=df.index,
         y=df['Drawdown'],
         mode='lines',
