@@ -1139,11 +1139,10 @@ with col_hm2:
 # =============================================================================
 # 10. DRAWDOWN 10 ANS
 # =============================================================================
-# 1. Calcul du drawdown (si ce n'est pas déjà fait)
-# 1. Calcul du drawdown et de sa médiane
+# 1. Calcul du drawdown et de sa médiane (arrondie à l'entier)
 df['Peak'] = df['Close'].cummax()
 df['Drawdown'] = ((df['Close'] - df['Peak']) / df['Peak']) * 100
-median_drawdown = df['Drawdown'].median()
+max_drawdown = round(df['Drawdown'].min())
 
 # 2. Création de la figure Plotly
 fig = go.Figure()
@@ -1156,25 +1155,64 @@ fig.add_trace(go.Scatter(
     name='Drawdown',
     fill='tozeroy',
     line=dict(color='#ff4b4b', width=1.5),
-    fillcolor='rgba(255, 75, 75, 0.2)'
+    fillcolor='rgba(255, 75, 75, 0.2)',
+    showlegend=False  # Cache de la légende pour cette trace
 ))
 
-# Ligne horizontale de la médiane
+# Ligne horizontale de la médiane avec la valeur affichée à droite
+fig.add_trace(go.Scatter(
+    x=[df.index[-1]],  # On place le point texte à la toute fin de l'axe X (à droite)
+    y=[max_drawdown],
+    mode='text+lines',
+    text=[f"Max: {max_drawdown}%"],
+    textposition="middle right",  # Positionne le texte à droite du point final
+    line=dict(color='orange', width=1.5, dash='dash'),
+    showlegend=False  # Cache de la légende
+))
+
+# Tracé complet de la ligne horizontale sur toute la largeur (pour éviter qu'elle s'arrête au dernier point)
+# Astuce : On trace une ligne continue de bout en bout sans texte, et on superpose le texte à la fin.
+# Version propre combinée :
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=df.index,
+    y=df['Drawdown'],
+    mode='lines',
+    fill='tozeroy',
+    line=dict(color='#ff4b4b', width=1.5),
+    fillcolor='rgba(255, 75, 75, 0.2)',
+    showlegend=False
+))
+
+# Ligne horizontale sur toute la période
 fig.add_trace(go.Scatter(
     x=[df.index[0], df.index[-1]],
-    y=[median_drawdown, median_drawdown],
+    y=[max_drawdown, max_drawdown],
     mode='lines',
-    name=f'Médiane ({median_drawdown:.2f}%)',
-    line=dict(color='orange', width=1.5, dash='dash')
+    line=dict(color='orange', width=1.5, dash='dash'),
+    showlegend=False
 ))
 
-# 3. Mise en forme du thème
+# Ajout du texte de la valeur tout à droite de la ligne
+fig.add_trace(go.Scatter(
+    x=[df.index[-1]],
+    y=[median_drawdown],
+    mode='text',
+    text=[f" Médiane : {median_drawdown}%"],
+    textposition="middle right",
+    textfont=dict(color="orange", size=11),
+    showlegend=False
+))
+
+# 3. Mise en forme globale (désactivation complète de la légende et marges ajustées)
 fig.update_layout(
-    title="Évolution du Drawdown (10 ans) & Médiane",
+    title="Évolution du Drawdown (10 ans)",
     xaxis_title="",
     yaxis_title="Drawdown (%)",
     template="plotly_dark",
-    margin=dict(l=10, r=10, t=40, b=10),
+    showlegend=False,  # Désactive la légende globalement
+    margin=dict(l=10, r=80, t=40, b=10),  # Augmentation de la marge de droite (r=80) pour laisser de la place au texte
     height=350,
     hovermode="x unified"
 )
