@@ -1142,7 +1142,7 @@ with col_hm2:
 st.write("")
 st.markdown(
     f"<div class='card-title' style='background:white; padding:15px; border-radius:12px 12px 0 0; margin-bottom:0;'>📅 Historique du ticker {info.get('shortName', ticker_input)}</div>",
-    unsafe_allow_html=True
+    unsafe_allow_html=True)
 col_h1, col_h2 = st.columns(2)
 
 # =============================================================================
