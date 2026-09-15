@@ -1265,7 +1265,7 @@ fig.add_trace(go.Scatter(
     name='Cours',
     fill='tozeroy',
     line=dict(color='#009FB1', width=2),  # Bleu professionnel
-    fillcolor='rgba(41, 98, 255, 0.1)',              # Remplissage bleu très transparent
+    fillcolor='rgba(0, 159, 177, 0.1)',              # Remplissage bleu très transparent
     hoverinfo='skip'
 ))
 
@@ -1302,7 +1302,7 @@ fig.add_annotation(
     xref="x",
     yref="y",
     font=dict(color="white", size=12),
-    bgcolor="rgba(41, 98, 255, 0.95)", # Fond bleu assorti
+    bgcolor="rgba(0, 159, 177, 0.95)", # Fond bleu assorti
     bordercolor="white",
     borderwidth=1,
     borderpad=3,
