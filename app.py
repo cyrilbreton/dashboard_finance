@@ -1163,7 +1163,8 @@ fig.add_trace(go.Scatter(
 
 # Style de l'axe Y (étiquettes à droite, format pourcentage)
 fig.update_yaxes(
-    tickformat=".0f%%",
+    tickformat=".0f",
+    ticksuffix="%",
     ticks="outside",
     showline=True,
     linecolor='lightgray',
