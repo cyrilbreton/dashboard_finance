@@ -1179,9 +1179,10 @@ fig.update_xaxes(
     showline=True,
     linecolor='lightgray',
     ticks="inside",
-    dticks= "M12",
-    ticklabelmode="period", # Affiche l'année au début de la période
-    tickformat="%Y" # Force l'affichage de l'année sur 4 chiffres
+    dtick= "M12",
+    ticklabelmode="period", 
+    tickformat="%Y",
+    tickangle=0
 )
 
 # Ajout de l'annotation pour le drawdown actuel (bulle en haut à droite)
