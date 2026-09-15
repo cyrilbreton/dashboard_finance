@@ -1178,7 +1178,7 @@ fig.update_yaxes(
 fig.update_xaxes(
     showline=True,
     linecolor='lightgray',
-    ticks="outside",
+    ticks="inside",
     ticklabelmode="period", # Affiche l'année au début de la période
     tickformat="%Y" # Force l'affichage de l'année sur 4 chiffres
 )
@@ -1201,12 +1201,11 @@ fig.add_annotation(
     ay=0 # Décalage y de l'étiquette
 )
 
-# Ajout du bandeau d'information (similaire à "NasdaqGS:MSFT -34.3%")
-# On le place en bas à gauche du graphique
+# Ajout du bandeau d'information 
 fig.add_annotation(
     x=df.index[0],
     y=df['Drawdown'].min() * 0.95, # Position basse
-    text=f"<b>{ticker_input} - {df['Drawdown'].min():.1f}%</b>",
+    text=f"<b>{ticker_input}  {df['Drawdown'].min():.1f}%</b>",
     showarrow=False,
     xref="x",
     yref="y",
@@ -1228,9 +1227,3 @@ fig.update_layout(
 
 # --- 4. Affichage dans Streamlit ---
 st.plotly_chart(fig, use_container_width=True)
-
-# Affichage des métriques sous le graphique pour plus de détails
-col1, col2, col3 = st.columns(3)
-col1.metric("Prix Actuel", f"${current_price:,.2f}")
-col2.metric("Drawdown Actuel", f"{current_drawdown:.2f}%", delta_color="normal")
-col3.metric("Max Drawdown (10 ans)", f"{df['Drawdown'].min():.2f}%")
