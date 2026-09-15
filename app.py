@@ -192,6 +192,7 @@ tickers_portfolio = {
     "Investor AB": "INVE-B.ST",
     "Mauna Kea Techologies": "ALMKT.PA",
     "Novo Nordisk": "NOV.DE",
+    "Microsoft":"MSFT",
     "TotalEnergies": "TTE.PA",
     "Visa": "V",
     "Amundi MSCI World": "DCAM.PA",
