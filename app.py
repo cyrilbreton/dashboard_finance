@@ -835,6 +835,75 @@ with col4:
 st.write("")
 
 
+# -----------------------------------------------------------------------------
+# 5. JAUGES PERSONNALISÉES AVEC LA NOUVELLE PALETTE
+# -----------------------------------------------------------------------------
+gauge_cols = st.columns(5)
+
+def creer_jauge_custom(titre, valeur, min_val, max_val, suffixe=""):
+    FONT_FAMILY = "Source Sans Pro, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
+
+    # 🟢 Sécurité : Si la valeur est None ou NaN, on force 0 pour éviter de casser Plotly
+    if valeur is None or (isinstance(valeur, float) and np.isnan(valeur)):
+        valeur_safe = 0.0
+    else:
+        valeur_safe = float(valeur)
+
+    fig = go.Figure(go.Indicator(
+        mode="gauge+number",
+        value=valeur_safe,
+        number={
+            'suffix': suffixe,
+            'valueformat': '.2f' if 'σ' in suffixe else '.1f',
+            'font': {'color': '#147394', 'size': 20, 'family': FONT_FAMILY}
+        },
+        title={
+            'text': titre,
+            'font': {'size': 13, 'color': '#3F5056', 'family': FONT_FAMILY}
+        },
+        gauge={
+            'axis': {
+                'range': [min_val, max_val],
+                'tickcolor': "#3F5056",
+                'tickfont': {'family': FONT_FAMILY, 'size': 10, 'color': '#3F5056'}
+            },
+            'bar': {'color': "#147394", 'thickness': 0.3},
+            'bgcolor': "#ffffff",
+            'borderwidth': 0,
+            'steps': [
+                {'range': [min_val, min_val + (max_val-min_val)*0.5], 'color': "#ADD9D3"},
+                {'range': [min_val + (max_val-min_val)*0.5, max_val], 'color': "#51BBB4"}
+            ],
+        }
+    ))
+
+    fig.update_layout(
+        height=210,
+        margin=dict(l=20, r=20, t=50, b=10),
+        separators=', ',  # Virgule pour les décimales
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        font=dict(family=FONT_FAMILY)
+    )
+    return fig
+
+# 🟢 Affichage des 5 jauges en dehors de la fonction
+with gauge_cols[0]:
+    st.plotly_chart(creer_jauge_custom("CAGR 10A(%)", cagr, -10, 30, "%"), use_container_width=True)
+
+with gauge_cols[1]:
+    st.plotly_chart(creer_jauge_custom("R² (Qualité)", r_value**2, 0, 1), use_container_width=True)
+
+with gauge_cols[2]:
+    st.plotly_chart(creer_jauge_custom("Perf. 12M (%)", perf_12m, -50, 50, "%"), use_container_width=True)
+
+with gauge_cols[3]:
+    st.plotly_chart(creer_jauge_custom("Perf. 5A (%)", perf_5a, -50, 150, "%"), use_container_width=True)
+
+with gauge_cols[4]:
+    st.plotly_chart(creer_jauge_custom("Position (σ)", position_sigma, -3, 3, "σ"), use_container_width=True)
+
+st.write("")
 
 # -----------------------------------------------------------------------------
 # 7. HISTORIQUE COURS : DRAWDOWN (10A) & COURS (10A)
@@ -1026,77 +1095,6 @@ fig.update_layout(
 # --- 4. Affichage dans Streamlit ---
 with col_h2:
     st.plotly_chart(fig, use_container_width=True,config={'displayModeBar': False})
-
-
-# -----------------------------------------------------------------------------
-# 5. JAUGES PERSONNALISÉES AVEC LA NOUVELLE PALETTE
-# -----------------------------------------------------------------------------
-gauge_cols = st.columns(5)
-
-def creer_jauge_custom(titre, valeur, min_val, max_val, suffixe=""):
-    FONT_FAMILY = "Source Sans Pro, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
-
-    # 🟢 Sécurité : Si la valeur est None ou NaN, on force 0 pour éviter de casser Plotly
-    if valeur is None or (isinstance(valeur, float) and np.isnan(valeur)):
-        valeur_safe = 0.0
-    else:
-        valeur_safe = float(valeur)
-
-    fig = go.Figure(go.Indicator(
-        mode="gauge+number",
-        value=valeur_safe,
-        number={
-            'suffix': suffixe,
-            'valueformat': '.2f' if 'σ' in suffixe else '.1f',
-            'font': {'color': '#147394', 'size': 20, 'family': FONT_FAMILY}
-        },
-        title={
-            'text': titre,
-            'font': {'size': 13, 'color': '#3F5056', 'family': FONT_FAMILY}
-        },
-        gauge={
-            'axis': {
-                'range': [min_val, max_val],
-                'tickcolor': "#3F5056",
-                'tickfont': {'family': FONT_FAMILY, 'size': 10, 'color': '#3F5056'}
-            },
-            'bar': {'color': "#147394", 'thickness': 0.3},
-            'bgcolor': "#ffffff",
-            'borderwidth': 0,
-            'steps': [
-                {'range': [min_val, min_val + (max_val-min_val)*0.5], 'color': "#ADD9D3"},
-                {'range': [min_val + (max_val-min_val)*0.5, max_val], 'color': "#51BBB4"}
-            ],
-        }
-    ))
-
-    fig.update_layout(
-        height=210,
-        margin=dict(l=20, r=20, t=50, b=10),
-        separators=', ',  # Virgule pour les décimales
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        font=dict(family=FONT_FAMILY)
-    )
-    return fig
-
-# 🟢 Affichage des 5 jauges en dehors de la fonction
-with gauge_cols[0]:
-    st.plotly_chart(creer_jauge_custom("CAGR 10A(%)", cagr, -10, 30, "%"), use_container_width=True)
-
-with gauge_cols[1]:
-    st.plotly_chart(creer_jauge_custom("R² (Qualité)", r_value**2, 0, 1), use_container_width=True)
-
-with gauge_cols[2]:
-    st.plotly_chart(creer_jauge_custom("Perf. 12M (%)", perf_12m, -50, 50, "%"), use_container_width=True)
-
-with gauge_cols[3]:
-    st.plotly_chart(creer_jauge_custom("Perf. 5A (%)", perf_5a, -50, 150, "%"), use_container_width=True)
-
-with gauge_cols[4]:
-    st.plotly_chart(creer_jauge_custom("Position (σ)", position_sigma, -3, 3, "σ"), use_container_width=True)
-
-st.write("")
 
 # -----------------------------------------------------------------------------
 # 6. GRAPHIQUE LOGARITHMIQUE SUR 15 ANS
