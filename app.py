@@ -1216,7 +1216,7 @@ fig.add_annotation(
 
 # Mise en page générale
 fig.update_layout(
-    title=f"<b>Évolution du Drawdown - {ticker_symbol}</b>",
+    title=f"<b>Évolution du Drawdown - {ticker_input}</b>",
     xaxis_title="", # Pas de titre sur l'axe X (les années suffisent)
     yaxis_title="Drawdown (%)", # Titre sur l'axe Y à droite
     template="plotly_white", # Fond clair
