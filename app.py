@@ -1146,6 +1146,17 @@ df['Peak'] = df['Close'].cummax()
 df['Drawdown'] = ((df['Close'] - df['Peak']) / df['Peak']) * 100
 
 # 3. Affichage dans Streamlit
+fig_chart.update_layout(
+    yaxis=dict(title="% drawdown", side="left", gridcolor="#eef4f4"),
+    xaxis=dict(title="Année", gridcolor="#eef4f4"),
+    hovermode="x unified",
+    height=500,
+    paper_bgcolor='#ffffff',
+    plot_bgcolor='#ffffff',
+    margin=dict(l=20, r=20, t=20, b=20),
+    legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+)
+st.plotly_chart(df['drawdown'], use_container_width=True)
 st.subheader("Évolution du Drawdown (10 ans)")
-st.line_chart(df['Drawdown'])
+#st.line_chart(df['Drawdown'])
 
