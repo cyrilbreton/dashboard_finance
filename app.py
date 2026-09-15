@@ -1225,7 +1225,7 @@ fig.add_annotation(
 fig.update_layout(
     title=f"<b>Drawdown {info.get('shortName', ticker_input)}</b>",
     xaxis_title="", # Pas de titre sur l'axe X (les années suffisent)
-    yaxis_title="Drawdown (%)", # Titre sur l'axe Y à droite
+    yaxis_title="", # pas de titre sur l'axe Y
     template="plotly_white", # Fond clair
     margin=dict(l=10, r=80, t=40, b=50), # Marges ajustées, surtout à droite
     height=400,
