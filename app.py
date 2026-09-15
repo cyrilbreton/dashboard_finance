@@ -1141,55 +1141,101 @@ with col_hm2:
 # =============================================================================
 # 1. Calcul du drawdown et de sa médiane (arrondie à l'entier)
 df['Peak'] = df['Close'].cummax()
-df['Drawdown'] = ((df['Close'] - df['Peak']) / df['Peak']) * 100
-max_drawdown = round(df['Drawdown'].min())
+    df['Drawdown'] = ((df['Close'] - df['Peak']) / df['Peak']) * 100
 
-# Tracé complet de la ligne horizontale sur toute la largeur (pour éviter qu'elle s'arrête au dernier point)
-# Astuce : On trace une ligne continue de bout en bout sans texte, et on superpose le texte à la fin.
-# Version propre combinée :
-fig = go.Figure()
+    # Récupération de la dernière valeur (valeur actuelle)
+    current_drawdown = df['Drawdown'].iloc[-1]
+    current_date = df.index[-1].strftime('%Y-%m-%d')
+    current_price = df['Close'].iloc[-1]
 
-fig.add_trace(go.Scatter(
-    x=df.index,
-    y=df['Drawdown'],
-    mode='lines',
-    fill='tozeroy',
-    line=dict(color='#ff4b4b', width=2),
-    fillcolor='rgba(255, 75, 75, 0.2)',
-    showlegend=False
-))
+    # --- 2. Création du graphique Plotly ---
+    fig = go.Figure()
 
-# Ligne horizontale sur toute la période
-fig.add_trace(go.Scatter(
-    x=[df.index[0], df.index[-1]],
-    y=[max_drawdown, max_drawdown],
-    mode='lines',
-    line=dict(color='red', width=1.5, dash='dash'),
-    showlegend=False
-))
+    # Ajout de la zone remplie (le "remplissage" rouge)
+    fig.add_trace(go.Scatter(
+        x=df.index,
+        y=df['Drawdown'],
+        mode='lines',
+        name='Drawdown',
+        fill='tozeroy',  # Remplit de la courbe à zéro
+        line=dict(color='rgba(240, 89, 89, 1)', width=1.5), # Couleur rouge
+        fillcolor='rgba(240, 89, 89, 0.1)', # Zone très transparente
+        hoverinfo='skip' # Désactive le survol par défaut pour gérer le custom_data si besoin
+    ))
 
-# Ajout du texte de la valeur tout à droite de la ligne
-fig.add_trace(go.Scatter(
-    x=[df.index[-1]],
-    y=[max_drawdown],
-    mode='text',
-    text=[f" Max : {max_drawdown}%"],
-    textposition="middle right",
-    textfont=dict(color="black", size=11),
-    showlegend=False
-))
+    # --- 3. Configuration de l'affichage "Fiscal AI" ---
 
-# 3. Mise en forme globale (désactivation complète de la légende et marges ajustées)
-fig.update_layout(
-    title="Évolution du Drawdown (10 ans)",
-    xaxis_title="",
-    yaxis_title="Drawdown (%)",
-    template="plotly_dark",
-    showlegend=False,  # Désactive la légende globalement
-    margin=dict(l=10, r=80, t=40, b=10),  # Augmentation de la marge de droite (r=80) pour laisser de la place au texte
-    height=350,
-    hovermode="x unified"
-)
+    # Style de l'axe Y (étiquettes à droite, format pourcentage)
+    fig.update_yaxes(
+        tickformat=".0f%%", # Format entier + pourcentage (ex: -20%)
+        ticks="outside",
+        showline=True,
+        linecolor='lightgray',
+        side="right",  # Étiquettes à droite comme dans l'image
+        range=[df['Drawdown'].min() * 1.1, 0] # Ajuste la plage pour un peu d'espace
+    )
 
-# 4. Affichage dans Streamlit
-st.plotly_chart(fig, use_container_width=True)
+    # Style de l'axe X (graduations annuelles)
+    fig.update_xaxes(
+        showline=True,
+        linecolor='lightgray',
+        ticks="outside",
+        ticklabelmode="period", # Affiche l'année au début de la période
+        tickformat="%Y" # Force l'affichage de l'année sur 4 chiffres
+    )
+
+    # Ajout de l'annotation pour le drawdown actuel (bulle en haut à droite)
+    annotation_text = f"{current_drawdown:.1f}%"
+    fig.add_annotation(
+        x=df.index[-1], # Position x = dernière date
+        y=current_drawdown, # Position y = valeur actuelle
+        text=annotation_text,
+        showarrow=False,
+        xref="x",
+        yref="y",
+        font=dict(color="white", size=12),
+        bgcolor="rgba(240, 89, 89, 0.95)", # Fond rouge
+        bordercolor="white",
+        borderwidth=1,
+        borderpad=3,
+        ax=30, # Décalage x de l'étiquette
+        ay=0 # Décalage y de l'étiquette
+    )
+
+    # Ajout du bandeau d'information (similaire à "NasdaqGS:MSFT -34.3%")
+    # On le place en bas à gauche du graphique
+    fig.add_annotation(
+        x=df.index[0],
+        y=df['Drawdown'].min() * 0.95, # Position basse
+        text=f"<b>{ticker_symbol} -{df['Drawdown'].min():.1f}%</b> (Max sur 10 ans)",
+        showarrow=False,
+        xref="x",
+        yref="y",
+        xanchor="left",
+        font=dict(color="black", size=14)
+    )
+
+    # Mise en page générale
+    fig.update_layout(
+        title=f"<b>Évolution du Drawdown - {ticker_symbol}</b>",
+        xaxis_title="", # Pas de titre sur l'axe X (les années suffisent)
+        yaxis_title="Drawdown (%)", # Titre sur l'axe Y à droite
+        template="plotly_white", # Fond clair
+        margin=dict(l=10, r=80, t=40, b=50), # Marges ajustées, surtout à droite
+        height=400,
+        hovermode="x unified", # Ligne verticale au survol montrant la valeur à cette date
+        showlegend=False # Pas de légende
+    )
+
+    # --- 4. Affichage dans Streamlit ---
+    st.plotly_chart(fig, use_container_width=True)
+
+    # Affichage des métriques sous le graphique pour plus de détails
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Prix Actuel", f"${current_price:,.2f}")
+    col2.metric("Drawdown Actuel", f"{current_drawdown:.2f}%", delta_color="normal")
+    col3.metric("Max Drawdown (10 ans)", f"{df['Drawdown'].min():.2f}%")
+
+except Exception as e:
+    st.error(f"Une erreur est survenue : {e}")
+    st.write("Veuillez réessayer plus tard ou changer le symbole.")
