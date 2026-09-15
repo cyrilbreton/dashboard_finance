@@ -1233,7 +1233,7 @@ fig.add_annotation(
 
 # Mise en page générale
 fig.update_layout(
-    title=f"<b>Drawdown {info.get('shortName', ticker_input)}</b>",
+    title="",
     xaxis_title="", # Pas de titre sur l'axe X (les années suffisent)
     yaxis_title="", # pas de titre sur l'axe Y
     template="plotly_white", # Fond clair
