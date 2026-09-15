@@ -356,10 +356,7 @@ df['-2std'] = np.exp(df['Log_Pred'] - 2 * std_dev)
 cours_actuel = df['Close'].iloc[-1]
 valeur_theorique = df['Theoretical'].iloc[-1]
 ecart_regression = ((valeur_theorique - cours_actuel) / valeur_theorique) * 100
-if ecart_regression < 0:
-    ecart_regression = "<span class='badge badge-red'></span>"
-else:
-    ecart_regression = "<span class='badge badge-green'></span>"
+badge_class = "badge-red" if ecart_regression < 0 else "badge-green"
 position_sigma = (np.log(cours_actuel) - df['Log_Pred'].iloc[-1]) / std_dev
 
 nb_jours_projection = 1260
@@ -776,7 +773,7 @@ with col1:
     <div class="metric-card">
         <div class="card-title">📈 Données Actuelles</div>
         <div class="metric-row"><span class="metric-label">Valeur théorique</span><span class="metric-value">{fmt(valeur_theorique, 2, symbole_devise)}</span></div>
-        <div class="metric-row"><span class="metric-label">Écart vs régression</span><span class="metric-value">{fmt(ecart_regression, 2, '%')}</span></div>
+        <div class="metric-row"><span class="metric-label">Écart vs régression</span><span class="metric-value"><span class="badge {badge_class}">{fmt(ecart_regression, 2, '%')}</span></span></div>
         <div class="metric-row"><span class="metric-label">Rendement div.</span><span class="metric-value">{fmt(rendement_div, 2, '%')}</span></div>
         <div class="metric-row"><span class="metric-label">Payout Ratio</span><span>{payout_ratio_str}</span></div>
         <div class="metric-row"><span class="metric-label">Div. annuel</span><span class="metric-value">{fmt(dividende_annuel, 2, symbole_devise)}</span></div>
