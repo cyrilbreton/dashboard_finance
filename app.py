@@ -1134,3 +1134,18 @@ fig_vol.update_layout(
 
 with col_hm2:
     st.plotly_chart(fig_vol, use_container_width=True)
+
+
+# =============================================================================
+# 10. DRAWDOWN 10 ANS
+# =============================================================================
+# 1. Calcul du pic cumulé sur 10 ans (si df contient déjà l'historique 10y)
+df['Peak'] = df['Close'].cummax()
+
+# 2. Calcul du drawdown en pourcentage
+df['Drawdown'] = ((df['Close'] - df['Peak']) / df['Peak']) * 100
+
+# 3. Affichage dans Streamlit
+st.subheader("Évolution du Drawdown (10 ans)")
+st.line_chart(df['Drawdown'])
+
