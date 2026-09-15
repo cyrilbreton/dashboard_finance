@@ -1157,12 +1157,12 @@ fig.add_trace(go.Scatter(
     mode='lines',
     name='Drawdown',
     fill='tozeroy',  # Remplit de la courbe à zéro
-    line=dict(color='rgba(240, 89, 89, 1)', width=1.5), # Couleur rouge
+    line=dict(color='rgba(240, 89, 89, 1)', width=2.5), # Couleur rouge
     fillcolor='rgba(240, 89, 89, 0.1)', # Zone très transparente
     hoverinfo='skip' # Désactive le survol par défaut pour gérer le custom_data si besoin
 ))
 
-# --- 3. Configuration de l'affichage "Fiscal AI" ---
+# --- 3. Configuration de l'affichage ---
 
 # Style de l'axe Y (étiquettes à droite, format pourcentage)
 fig.update_yaxes(
