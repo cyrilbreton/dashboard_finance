@@ -1264,7 +1264,7 @@ fig.add_trace(go.Scatter(
     mode='lines',
     name='Cours',
     fill='tozeroy',
-    line=dict(color='rgba(41, 98, 255, 1)', width=2),  # Bleu professionnel
+    line=dict(color='#009FB1', width=2),  # Bleu professionnel
     fillcolor='rgba(41, 98, 255, 0.1)',              # Remplissage bleu très transparent
     hoverinfo='skip'
 ))
