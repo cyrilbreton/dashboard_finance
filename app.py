@@ -1245,7 +1245,7 @@ fig.update_layout(
 
 # --- 4. Affichage dans Streamlit ---
 with col_h1:
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True,config={'displayModeBar': False})
 
 # =============================================================================
 # 11. COURS 10 ANS
@@ -1307,7 +1307,7 @@ fig.add_annotation(
     bordercolor="white",
     borderwidth=1,
     borderpad=3,
-    ax=100, 
+    ax=30, 
     ay=0 
 )
 
@@ -1325,5 +1325,5 @@ fig.update_layout(
 
 # --- 4. Affichage dans Streamlit ---
 with col_h2:
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True,config={'displayModeBar': False})
 
