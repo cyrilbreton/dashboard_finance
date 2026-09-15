@@ -1206,7 +1206,7 @@ fig.add_annotation(
 fig.add_annotation(
     x=df.index[0],
     y=df['Drawdown'].min() * 0.95, # Position basse
-    text=f"<b>{ticker_symbol} -{df['Drawdown'].min():.1f}%</b> (Max sur 10 ans)",
+    text=f"<b>{ticker} -{df['Drawdown'].min():.1f}%</b> (Max sur 10 ans)",
     showarrow=False,
     xref="x",
     yref="y",
