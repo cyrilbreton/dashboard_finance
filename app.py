@@ -1310,28 +1310,6 @@ fig.add_annotation(
     ay=0 
 )
 
-# Ajout de la ligne horizontale de référence (ex: le prix minimum sur la période)
-fig.add_trace(go.Scatter(
-    x=[df.index[0], df.index[-1]],
-    y=[min_price, min_price],
-    mode='lines',
-    line=dict(color='rgba(41, 98, 255, 0.5)', width=1, dash='solid'),
-    showlegend=False,
-    hoverinfo='skip'
-))
-
-# Ajout du bandeau d'information en bas à gauche
-fig.add_annotation(
-    x=df.index[0],
-    y=min_price * 0.97,      # Position basse juste sous la ligne min
-    text=f"<b>{ticker_input} (Min: {min_price:.2f})</b>",
-    showarrow=False,
-    xref="x",
-    yref="y",
-    xanchor="left",
-    font=dict(color="black", size=14)
-)
-
 # Mise en page générale
 fig.update_layout(
     title=f"<b>Cours {info.get('shortName', ticker_input)}</b>",
