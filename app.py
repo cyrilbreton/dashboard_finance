@@ -1002,7 +1002,7 @@ fig.add_annotation(
 
 # Mise en page générale
 fig.update_layout(
-    title=dict(text="Drawdown", font=dict(size=14, color="#147394")),
+    title=dict(text="📉 Drawdown", font=dict(size=14, color="#147394")),
     xaxis_title="", # Pas de titre sur l'axe X (les années suffisent)
     yaxis_title="", # pas de titre sur l'axe Y
     template="plotly_white", # Fond clair
@@ -1082,7 +1082,7 @@ fig.add_annotation(
 
 # Mise en page générale
 fig.update_layout(
-    title=dict(text="Valorisation", font=dict(size=14, color="#147394")),
+    title=dict(text="📈 Valorisation", font=dict(size=14, color="#147394")),
     xaxis_title="", 
     yaxis_title="", 
     template="plotly_white", 
