@@ -1205,7 +1205,7 @@ fig.add_annotation(
 # 2. Ajout de la ligne horizontale rouge du Max Drawdown
 fig.add_trace(go.Scatter(
     x=[df.index[0], df.index[-1]],
-    y=[max_dd, max_dd],
+    y=[df['Drawdown'].min(), df['Drawdown'].min()],
     mode='lines',
     line=dict(color='rgba(240, 89, 89, 0.9)', width=1, dash='solid'),
     showlegend=False,
