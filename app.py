@@ -1152,89 +1152,89 @@ fig = go.Figure()
 
 # Ajout de la zone remplie (le "remplissage" rouge)
 fig.add_trace(go.Scatter(
-        x=df.index,
-        y=df['Drawdown'],
-        mode='lines',
-        name='Drawdown',
-        fill='tozeroy',  # Remplit de la courbe à zéro
-        line=dict(color='rgba(240, 89, 89, 1)', width=1.5), # Couleur rouge
-        fillcolor='rgba(240, 89, 89, 0.1)', # Zone très transparente
-        hoverinfo='skip' # Désactive le survol par défaut pour gérer le custom_data si besoin
-    ))
+    x=df.index,
+    y=df['Drawdown'],
+    mode='lines',
+    name='Drawdown',
+    fill='tozeroy',  # Remplit de la courbe à zéro
+    line=dict(color='rgba(240, 89, 89, 1)', width=1.5), # Couleur rouge
+    fillcolor='rgba(240, 89, 89, 0.1)', # Zone très transparente
+    hoverinfo='skip' # Désactive le survol par défaut pour gérer le custom_data si besoin
+))
 
-    # --- 3. Configuration de l'affichage "Fiscal AI" ---
+# --- 3. Configuration de l'affichage "Fiscal AI" ---
 
-    # Style de l'axe Y (étiquettes à droite, format pourcentage)
-    fig.update_yaxes(
-        tickformat=".0f%%", # Format entier + pourcentage (ex: -20%)
-        ticks="outside",
-        showline=True,
-        linecolor='lightgray',
-        side="right",  # Étiquettes à droite comme dans l'image
-        range=[df['Drawdown'].min() * 1.1, 0] # Ajuste la plage pour un peu d'espace
-    )
+# Style de l'axe Y (étiquettes à droite, format pourcentage)
+fig.update_yaxes(
+    tickformat=".0f%%", # Format entier + pourcentage (ex: -20%)
+    ticks="outside",
+    showline=True,
+    linecolor='lightgray',
+    side="right",  # Étiquettes à droite comme dans l'image
+    range=[df['Drawdown'].min() * 1.1, 0] # Ajuste la plage pour un peu d'espace
+)
 
-    # Style de l'axe X (graduations annuelles)
-    fig.update_xaxes(
-        showline=True,
-        linecolor='lightgray',
-        ticks="outside",
-        ticklabelmode="period", # Affiche l'année au début de la période
-        tickformat="%Y" # Force l'affichage de l'année sur 4 chiffres
-    )
+# Style de l'axe X (graduations annuelles)
+fig.update_xaxes(
+    showline=True,
+    linecolor='lightgray',
+    ticks="outside",
+    ticklabelmode="period", # Affiche l'année au début de la période
+    tickformat="%Y" # Force l'affichage de l'année sur 4 chiffres
+)
 
-    # Ajout de l'annotation pour le drawdown actuel (bulle en haut à droite)
-    annotation_text = f"{current_drawdown:.1f}%"
-    fig.add_annotation(
-        x=df.index[-1], # Position x = dernière date
-        y=current_drawdown, # Position y = valeur actuelle
-        text=annotation_text,
-        showarrow=False,
-        xref="x",
-        yref="y",
-        font=dict(color="white", size=12),
-        bgcolor="rgba(240, 89, 89, 0.95)", # Fond rouge
-        bordercolor="white",
-        borderwidth=1,
-        borderpad=3,
-        ax=30, # Décalage x de l'étiquette
-        ay=0 # Décalage y de l'étiquette
-    )
+# Ajout de l'annotation pour le drawdown actuel (bulle en haut à droite)
+annotation_text = f"{current_drawdown:.1f}%"
+fig.add_annotation(
+    x=df.index[-1], # Position x = dernière date
+    y=current_drawdown, # Position y = valeur actuelle
+    text=annotation_text,
+    showarrow=False,
+    xref="x",
+    yref="y",
+    font=dict(color="white", size=12),
+    bgcolor="rgba(240, 89, 89, 0.95)", # Fond rouge
+    bordercolor="white",
+    borderwidth=1,
+    borderpad=3,
+    ax=30, # Décalage x de l'étiquette
+    ay=0 # Décalage y de l'étiquette
+)
 
-    # Ajout du bandeau d'information (similaire à "NasdaqGS:MSFT -34.3%")
-    # On le place en bas à gauche du graphique
-    fig.add_annotation(
-        x=df.index[0],
-        y=df['Drawdown'].min() * 0.95, # Position basse
-        text=f"<b>{ticker_symbol} -{df['Drawdown'].min():.1f}%</b> (Max sur 10 ans)",
-        showarrow=False,
-        xref="x",
-        yref="y",
-        xanchor="left",
-        font=dict(color="black", size=14)
-    )
+# Ajout du bandeau d'information (similaire à "NasdaqGS:MSFT -34.3%")
+# On le place en bas à gauche du graphique
+fig.add_annotation(
+    x=df.index[0],
+    y=df['Drawdown'].min() * 0.95, # Position basse
+    text=f"<b>{ticker_symbol} -{df['Drawdown'].min():.1f}%</b> (Max sur 10 ans)",
+    showarrow=False,
+    xref="x",
+    yref="y",
+    xanchor="left",
+    font=dict(color="black", size=14)
+)
 
-    # Mise en page générale
-    fig.update_layout(
-        title=f"<b>Évolution du Drawdown - {ticker_symbol}</b>",
-        xaxis_title="", # Pas de titre sur l'axe X (les années suffisent)
-        yaxis_title="Drawdown (%)", # Titre sur l'axe Y à droite
-        template="plotly_white", # Fond clair
-        margin=dict(l=10, r=80, t=40, b=50), # Marges ajustées, surtout à droite
-        height=400,
-        hovermode="x unified", # Ligne verticale au survol montrant la valeur à cette date
-        showlegend=False # Pas de légende
-    )
+# Mise en page générale
+fig.update_layout(
+    title=f"<b>Évolution du Drawdown - {ticker_symbol}</b>",
+    xaxis_title="", # Pas de titre sur l'axe X (les années suffisent)
+    yaxis_title="Drawdown (%)", # Titre sur l'axe Y à droite
+    template="plotly_white", # Fond clair
+    margin=dict(l=10, r=80, t=40, b=50), # Marges ajustées, surtout à droite
+    height=400,
+    hovermode="x unified", # Ligne verticale au survol montrant la valeur à cette date
+    showlegend=False # Pas de légende
+)
 
-    # --- 4. Affichage dans Streamlit ---
-    st.plotly_chart(fig, use_container_width=True)
+# --- 4. Affichage dans Streamlit ---
+st.plotly_chart(fig, use_container_width=True)
 
-    # Affichage des métriques sous le graphique pour plus de détails
-    col1, col2, col3 = st.columns(3)
-    col1.metric("Prix Actuel", f"${current_price:,.2f}")
-    col2.metric("Drawdown Actuel", f"{current_drawdown:.2f}%", delta_color="normal")
-    col3.metric("Max Drawdown (10 ans)", f"{df['Drawdown'].min():.2f}%")
+# Affichage des métriques sous le graphique pour plus de détails
+col1, col2, col3 = st.columns(3)
+col1.metric("Prix Actuel", f"${current_price:,.2f}")
+col2.metric("Drawdown Actuel", f"{current_drawdown:.2f}%", delta_color="normal")
+col3.metric("Max Drawdown (10 ans)", f"{df['Drawdown'].min():.2f}%")
 
-except Exception as e:
-    st.error(f"Une erreur est survenue : {e}")
-    st.write("Veuillez réessayer plus tard ou changer le symbole.")
+except Exception as e
+st.error(f"Une erreur est survenue : {e}")
+st.write("Veuillez réessayer plus tard ou changer le symbole.")
