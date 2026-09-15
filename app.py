@@ -1234,7 +1234,3 @@ col1, col2, col3 = st.columns(3)
 col1.metric("Prix Actuel", f"${current_price:,.2f}")
 col2.metric("Drawdown Actuel", f"{current_drawdown:.2f}%", delta_color="normal")
 col3.metric("Max Drawdown (10 ans)", f"{df['Drawdown'].min():.2f}%")
-
-except Exception as e
-st.error(f"Une erreur est survenue : {e}")
-st.write("Veuillez réessayer plus tard ou changer le symbole.")
