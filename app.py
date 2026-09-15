@@ -1143,7 +1143,7 @@ with col_hm2:
 df['Peak'] = df['Close'].cummax()
 df['Drawdown'] = ((df['Close'] - df['Peak']) / df['Peak']) * 100
 # Récupération de la dernière valeur (valeur actuelle)
-#current_drawdown = df['Drawdown'].iloc[-1]
+current_drawdown = df['Drawdown'].iloc[-1]
 #current_date = df.index[-1].strftime('%Y-%m-%d')
 #current_price = df['Close'].iloc[-1]
 
