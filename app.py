@@ -767,6 +767,75 @@ st.markdown(
 
 
 
+# --- D. CARTES D'ANALYSE ---
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="card-title">📈 Données Actuelles</div>
+        <div class="metric-row"><span class="metric-label">Valeur théorique</span><span class="metric-value">{fmt(valeur_theorique, 2, symbole_devise)}</span></div>
+        <div class="metric-row"><span class="metric-label">Écart vs régression</span><span class="metric-value"><span class="badge {badge_class}">{fmt(ecart_regression, 2, '%')}</span></span></div>
+        <div class="metric-row"><span class="metric-label">Rendement div.</span><span class="metric-value">{fmt(rendement_div, 2, '%')}</span></div>
+        <div class="metric-row"><span class="metric-label">Payout Ratio</span><span>{payout_ratio_str}</span></div>
+        <div class="metric-row"><span class="metric-label">Div. annuel</span><span class="metric-value">{fmt(dividende_annuel, 2, symbole_devise)}</span></div>
+        <div class="metric-row"><span class="metric-label">Dernier div.</span><span class="metric-value">{fmt(dernier_div, 2, symbole_devise)}</span></div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="card-title">📊 Analyse Technique</div>
+        <div class="metric-row"><span class="metric-label">CAGR (10 ans)</span><span class="metric-value">{fmt(cagr, 2, '%')}</span></div>
+        <div class="metric-row"><span class="metric-label">Borne +2σ</span><span class="metric-value">{fmt(df['+2std'].iloc[-1], 2, symbole_devise)}</span></div>
+        <div class="metric-row"><span class="metric-label">Borne +1σ</span><span class="metric-value">{fmt(df['+1std'].iloc[-1], 2, symbole_devise)}</span></div>
+        <div class="metric-row"><span class="metric-label">Borne -1σ</span><span class="metric-value">{fmt(df['-1std'].iloc[-1], 2, symbole_devise)}</span></div>
+        <div class="metric-row"><span class="metric-label">Borne -2σ</span><span class="metric-value">{fmt(df['-2std'].iloc[-1], 2, symbole_devise)}</span></div>
+        <div class="metric-row"><span class="metric-label">Risque 6M</span><span>{risque_6m_str}</span></div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="card-title">📅 Prévisions & Perf.</div>
+        <div class="metric-row"><span class="metric-label">Perf. 12M</span><span class="metric-value">{fmt(perf_12m, 2, '%')}</span></div>
+        <div class="metric-row"><span class="metric-label">Perf. 5A</span><span class="metric-value">{fmt(perf_5a, 2, '%')}</span></div>
+        <div class="metric-row"><span class="metric-label">Prév. (5A)</span><span class="metric-value">{fmt(valeur_prevue_5a, 2, symbole_devise)}</span></div>
+        <div class="metric-row"><span class="metric-label">P/E (12M fwd)</span><span>{forward_pe_str}</span></div>
+        <div class="metric-row"><span class="metric-label">Volatilité BSM</span><span class="metric-value">{fmt(sigma_bsm * 100, 1, '%')}</span></div>
+        <div class="metric-row"><span class="metric-label">Prob. Baisse 6M</span><span>{bsm_risk_str}</span></div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col4:
+    couleur_score = "#00915A" if score_sante >= 70 else ("#009FB1" if score_sante >= 45 else "#E11D48")
+
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="card-title">🏥 Santé & Rentabilité</div>
+        <div class="metric-row"><span class="metric-label">Net Debt / EBITDA</span><span class="metric-value">{net_debt_ebitda_str}</span></div>
+        <div class="metric-row"><span class="metric-label">Current Ratio</span><span class="metric-value">{current_ratio_str}</span></div>
+        <div class="metric-row"><span class="metric-label">ROE</span><span class="metric-value">{roe_str}</span></div>
+        <div class="metric-row"><span class="metric-label">ROIC (est.)</span><span class="metric-value">{roic_str}</span></div>
+        <div class="metric-row"><span class="metric-label">PEG Ratio</span><span class="metric-value">{peg_str}</span></div>
+        <div class="metric-row" style="border-bottom: none; flex-direction: column; align-items: stretch; gap: 3px; padding-top: 4px; padding-bottom: 0px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.90rem;">
+                <span class="metric-label">Score global</span>
+                <span class="metric-value" style="color: {couleur_score};">{score_sante} %</span>
+            </div>
+            <div style="width: 100%; background-color: #EEF4F4; border-radius: 6px; height: 10px; overflow: hidden; display: flex; align-items: center;">
+                <div style="width: {score_sante}%; background-color: {couleur_score}; height: 100%; border-radius: 6px; transition: width 0.5s;"></div>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.write("")
+
+
+
 # -----------------------------------------------------------------------------
 # 7. HISTORIQUE COURS : DRAWDOWN (10A) & COURS (10A)
 # -----------------------------------------------------------------------------
@@ -958,74 +1027,6 @@ fig.update_layout(
 with col_h2:
     st.plotly_chart(fig, use_container_width=True,config={'displayModeBar': False})
 
-
-
-# --- D. CARTES D'ANALYSE ---
-col1, col2, col3, col4 = st.columns(4)
-
-with col1:
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="card-title">📈 Données Actuelles</div>
-        <div class="metric-row"><span class="metric-label">Valeur théorique</span><span class="metric-value">{fmt(valeur_theorique, 2, symbole_devise)}</span></div>
-        <div class="metric-row"><span class="metric-label">Écart vs régression</span><span class="metric-value"><span class="badge {badge_class}">{fmt(ecart_regression, 2, '%')}</span></span></div>
-        <div class="metric-row"><span class="metric-label">Rendement div.</span><span class="metric-value">{fmt(rendement_div, 2, '%')}</span></div>
-        <div class="metric-row"><span class="metric-label">Payout Ratio</span><span>{payout_ratio_str}</span></div>
-        <div class="metric-row"><span class="metric-label">Div. annuel</span><span class="metric-value">{fmt(dividende_annuel, 2, symbole_devise)}</span></div>
-        <div class="metric-row"><span class="metric-label">Dernier div.</span><span class="metric-value">{fmt(dernier_div, 2, symbole_devise)}</span></div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col2:
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="card-title">📊 Analyse Technique</div>
-        <div class="metric-row"><span class="metric-label">CAGR (10 ans)</span><span class="metric-value">{fmt(cagr, 2, '%')}</span></div>
-        <div class="metric-row"><span class="metric-label">Borne +2σ</span><span class="metric-value">{fmt(df['+2std'].iloc[-1], 2, symbole_devise)}</span></div>
-        <div class="metric-row"><span class="metric-label">Borne +1σ</span><span class="metric-value">{fmt(df['+1std'].iloc[-1], 2, symbole_devise)}</span></div>
-        <div class="metric-row"><span class="metric-label">Borne -1σ</span><span class="metric-value">{fmt(df['-1std'].iloc[-1], 2, symbole_devise)}</span></div>
-        <div class="metric-row"><span class="metric-label">Borne -2σ</span><span class="metric-value">{fmt(df['-2std'].iloc[-1], 2, symbole_devise)}</span></div>
-        <div class="metric-row"><span class="metric-label">Risque 6M</span><span>{risque_6m_str}</span></div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col3:
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="card-title">📅 Prévisions & Perf.</div>
-        <div class="metric-row"><span class="metric-label">Perf. 12M</span><span class="metric-value">{fmt(perf_12m, 2, '%')}</span></div>
-        <div class="metric-row"><span class="metric-label">Perf. 5A</span><span class="metric-value">{fmt(perf_5a, 2, '%')}</span></div>
-        <div class="metric-row"><span class="metric-label">Prév. (5A)</span><span class="metric-value">{fmt(valeur_prevue_5a, 2, symbole_devise)}</span></div>
-        <div class="metric-row"><span class="metric-label">P/E (12M fwd)</span><span>{forward_pe_str}</span></div>
-        <div class="metric-row"><span class="metric-label">Volatilité BSM</span><span class="metric-value">{fmt(sigma_bsm * 100, 1, '%')}</span></div>
-        <div class="metric-row"><span class="metric-label">Prob. Baisse 6M</span><span>{bsm_risk_str}</span></div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col4:
-    couleur_score = "#00915A" if score_sante >= 70 else ("#009FB1" if score_sante >= 45 else "#E11D48")
-
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="card-title">🏥 Santé & Rentabilité</div>
-        <div class="metric-row"><span class="metric-label">Net Debt / EBITDA</span><span class="metric-value">{net_debt_ebitda_str}</span></div>
-        <div class="metric-row"><span class="metric-label">Current Ratio</span><span class="metric-value">{current_ratio_str}</span></div>
-        <div class="metric-row"><span class="metric-label">ROE</span><span class="metric-value">{roe_str}</span></div>
-        <div class="metric-row"><span class="metric-label">ROIC (est.)</span><span class="metric-value">{roic_str}</span></div>
-        <div class="metric-row"><span class="metric-label">PEG Ratio</span><span class="metric-value">{peg_str}</span></div>
-        <div class="metric-row" style="border-bottom: none; flex-direction: column; align-items: stretch; gap: 3px; padding-top: 4px; padding-bottom: 0px;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.90rem;">
-                <span class="metric-label">Score global</span>
-                <span class="metric-value" style="color: {couleur_score};">{score_sante} %</span>
-            </div>
-            <div style="width: 100%; background-color: #EEF4F4; border-radius: 6px; height: 10px; overflow: hidden; display: flex; align-items: center;">
-                <div style="width: {score_sante}%; background-color: {couleur_score}; height: 100%; border-radius: 6px; transition: width 0.5s;"></div>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-st.write("")
 
 # -----------------------------------------------------------------------------
 # 5. JAUGES PERSONNALISÉES AVEC LA NOUVELLE PALETTE
