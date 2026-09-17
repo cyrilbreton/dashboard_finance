@@ -190,6 +190,7 @@ tickers_portfolio = {
     "Crédit Agricole": "ACA.PA",
     "Eli Lilly": "LLY",
     "Investor AB": "INVE-B.ST",
+    "Gaztransport & Technigaz": "GTT.PA",
     "Mauna Kea Techologies": "ALMKT.PA",
     "Novo Nordisk": "NOV.DE",
     "Microsoft":"MSFT",
