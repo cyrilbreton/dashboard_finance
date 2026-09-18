@@ -200,7 +200,7 @@ tickers_portfolio = {
     "Amundi Nasdaq 100": "UST.PA",
     "BNP Stox 600": "ETZ.PA",
     "Ishares Semiconductor": "SEME.PA",
-    "WisdomTree Gold Edge EUR": "GBSE.MI"
+    "WisdomTree Gold Edge EUR": "GBSE.MI",
     "Bitcoin": "BTC-EUR",
     "Solana": "SOL-EUR",
 }
