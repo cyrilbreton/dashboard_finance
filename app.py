@@ -191,6 +191,8 @@ tickers_portfolio = {
     "Eli Lilly": "LLY",
     "Investor AB": "INVE-B.ST",
     "Gaztransport & Technigaz": "GTT.PA",
+    "Hoegh Autoliners": "HAUTO.OL",
+    "Logista": "LOG.MC",
     "Mauna Kea Techologies": "ALMKT.PA",
     "Novo Nordisk": "NOV.DE",
     "Microsoft":"MSFT",
