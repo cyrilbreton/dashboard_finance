@@ -186,6 +186,7 @@ st.sidebar.markdown("### SELECTION TICKER")
 
 # 1. Liste prédéfinie : Portefeuille
 tickers_portfolio = {
+    "Allianz": "ALV.DE",
     "Air Liquide": "AI.PA",
     "Crédit Agricole": "ACA.PA",
     "Eli Lilly": "LLY",
