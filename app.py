@@ -194,7 +194,6 @@ tickers_portfolio = {
     "Investor AB": "INVE-B.ST",
     "Gaztransport & Technigaz": "GTT.PA",
     "Hoegh Autoliners": "HAUTO.OL",
-    "Mauna Kea Technologies": "ALMKT.PA",
     "Novo Nordisk": "NOV.DE",
     "Schneider Electric": "SU.PA",
     "Sandisk": "SNDK",
