@@ -186,10 +186,11 @@ st.sidebar.markdown("### SELECTION TICKER")
 
 # 1. Liste prédéfinie : Portefeuille
 tickers_portfolio = {
+    "Air Liquide": "AI.PA",
     "Allianz": "ALV.DE",
     "Anthropic": "ANT",
     "Applied Materials": "AMAT",
-    "Air Liquide": "AI.PA",
+    "Arista Network": "ANET",
     "Crédit Agricole": "ACA.PA",
     "Eli Lilly": "LLY",
     "Investor AB": "INVE-B.ST",
@@ -197,12 +198,10 @@ tickers_portfolio = {
     "Hoegh Autoliners": "HAUTO.OL",
     "Novo Nordisk": "NOV.DE",
     "Schneider Electric": "SU.PA",
-    "Sandisk": "SNDK",
     "TotalEnergies": "TTE.PA",
     "Visa": "V",
     "Amundi MSCI World": "DCAM.PA",
     "Amundi Nasdaq 100": "UST.PA",
-    "WisdomTree Gold Edge EUR": "GBSE.MI",
     "Bitcoin": "BTC-EUR",
     "Solana": "SOL-EUR",
 }
